@@ -1,0 +1,170 @@
+0a. Sempre trabalhar com uma copia do banco de dados
+
+1a. VERIFICAR SE O BANCO TEM ERROS
+	0a. Sempre trabalhar com uma copia do banco de dados
+
+1a. VERIFICAR SE O BANCO TEM ERROS
+	gfix -v -full -user sysdba -pass As#SafeDB! GESTORE.FDB
+
+2a. CORRIGIR OS ERROS DO BANCO
+	
+	gfix -mend -full -ignore -user sysdba -pass As#SafeDB! GESTORE.FDB 
+	obs: às vezes é necessário rodar o comando até o erro desaparecer.
+
+3a. CORRIGE ALGUNS ERROS E CRIA NOVO BANCO
+
+	gbak -backup -v -ignore -user sysdba -pass As#SafeDB! GESTORE.FDB GESTORE.FBK
+
+	SE DER ERRO NA TENTATIVA ACIMA:
+	gbak -backup -v -ignore -garbage -user sysdba -pass As#SafeDB! GESTORE.FDB GESTORE.FBK
+	
+	SE O ERRO CONTINUAR:	
+	gbak -backup -v -ignore -garbage -limbo -user sysdba -pass As#SafeDB! GESTORE.FDB GESTORE.FBK
+
+	RESTAURAR O BANCO:
+	gbak -create -v -user sysdba -pass As#SafeDB! GESTORE.FBK GESTORENEW.FDB	
+
+4a. EXTRA
+	gfix -online GESTORE.FDB -user SYSDBA -pass As#SafeDB!
+
+
+Observação:
+
+=========
+
+QUANDO DER ERRO NOS INDICES
+
+PRIMEIRO PASSO É CRIAR UM BANCO SEM INDICES E DPS UM BANCO METADATA APENAS COM A ESTRUTURA
+
+01 FAZER O BKP-REST SEM OS INDICES (-i) DO BANCO ORIGINAL (COM ERRO) - (CRIA UM BANCO SEM INDICES, POREM SEM ERROS)
+	
+	gbak.exe -b -v -g -user sysdba -pass As#SafeDB! ORIGINAL.FDB ORIGINAL.FBK
+	gbak.exe -c -v -g -i -user sysdba -pass As#SafeDB! GESTORE.FBK SEMINDICE.FDB
+	
+
+02 COM O MESMO ORIGINAL.FBK FAZER UM RESTORE APENAS PARA CRIAR O METADATA (APENAS ESTRUTURA DO BANCO COM OS INDICES)
+
+	gbak.exe -c -v -g -m -user sysdba -pass As#SafeDB! GESTORE.FBK METADATA.FDB
+
+
+
+03 IBPUMP (AGORA VAMOS JOGAR AS INFORMACOES DO BANCO SEMINDICES.FDB PARA A ESTRUTURA METADATA.FDB)
+
+	STEP 01
+
+	SOURCE DB	> SEMINDICE.FDB (BANCO SEM INDICES)
+	USER NAME 	> SYSDBA
+	PASS 		> As#SafeDB!
+	DIALECT 	> 3
+	
+	DESTINATION DB	> METADATA.FDB (ESTRUTURA)
+	USER NAME 	> SYSDBA
+	PASS 		> As#SafeDB!
+	DIALECT 	> 3
+
+	
+	STEP 02
+	
+	- GET DEFINITIONS
+	- BUILD RELATIONS
+	- UPDATE DEFINITIONS
+	- START (DEMORA UM POUCO)
+	- CLOSE
+
+	
+	STEP 03
+
+	- START
+	- VERIFICAR OS ERROS
+	- CLOSE
+
+
+04 AGORA FAZER UM BKP-REST DO BANCO METADATA.FDB (CRIA O NOVO BANCO GESTORE.FDB SEM ERROS)
+
+	gbak.exe -b -v -g -user sysdba -pass As#SafeDB! METADATA.FDB GESTORE.FBK
+	gbak.exe -c -v -g -user sysdba -pass As#SafeDB! GESTORE.FBK GESTORE.FDB
+
+
+05 COLOCAR O BANCO GESTORE.FDB NO LOCAL CORRETO
+
+
+2a. CORRIGIR OS ERROS DO BANCO
+	
+	gfix -mend -full -ignore -user sysdba -pass As#SafeDB! GESTORE.FDB 
+	obs: às vezes é necessário rodar o comando até o erro desaparecer.
+
+3a. CORRIGE ALGUNS ERROS E CRIA NOVO BANCO
+
+	gbak -backup -v -ignore -user sysdba -pass As#SafeDB! GESTORE.FDB GESTORE.FBK
+
+	SE DER ERRO NA TENTATIVA ACIMA:
+	gbak -backup -v -ignore -garbage -user sysdba -pass As#SafeDB! GESTORE.FDB GESTORE.FBK
+	
+	SE O ERRO CONTINUAR:	
+	gbak -backup -v -ignore -garbage -limbo -user sysdba -pass As#SafeDB! GESTORE.FDB GESTORE.FBK
+
+	RESTAURAR O BANCO:
+	gbak -create -v -user sysdba -pass As#SafeDB! GESTORE.FBK GESTORENEW.FDB	
+
+4a. EXTRA
+	gfix -online GESTORE.FDB -user SYSDBA -pass As#SafeDB!
+
+
+Observação:
+
+=========
+
+QUANDO DER ERRO NOS INDICES
+
+PRIMEIRO PASSO É CRIAR UM BANCO SEM INDICES E DPS UM BANCO METADATA APENAS COM A ESTRUTURA
+
+01 FAZER O BKP-REST SEM OS INDICES (-i) DO BANCO ORIGINAL (COM ERRO) - (CRIA UM BANCO SEM INDICES, POREM SEM ERROS)
+	
+	gbak.exe -b -v -g -user sysdba -pass As#SafeDB! ORIGINAL.FDB ORIGINAL.FBK
+	gbak.exe -c -v -g -i -user sysdba -pass As#SafeDB! GESTORE.FBK SEMINDICE.FDB
+	
+
+02 COM O MESMO ORIGINAL.FBK FAZER UM RESTORE APENAS PARA CRIAR O METADATA (APENAS ESTRUTURA DO BANCO COM OS INDICES)
+
+	gbak.exe -c -v -g -m -user sysdba -pass As#SafeDB! GESTORE.FBK METADATA.FDB
+
+
+
+03 IBPUMP (AGORA VAMOS JOGAR AS INFORMACOES DO BANCO SEMINDICES.FDB PARA A ESTRUTURA METADATA.FDB)
+
+	STEP 01
+
+	SOURCE DB	> SEMINDICE.FDB (BANCO SEM INDICES)
+	USER NAME 	> SYSDBA
+	PASS 		> As#SafeDB!
+	DIALECT 	> 3
+	
+	DESTINATION DB	> METADATA.FDB (ESTRUTURA)
+	USER NAME 	> SYSDBA
+	PASS 		> As#SafeDB!
+	DIALECT 	> 3
+
+	
+	STEP 02
+	
+	- GET DEFINITIONS
+	- BUILD RELATIONS
+	- UPDATE DEFINITIONS
+	- START (DEMORA UM POUCO)
+	- CLOSE
+
+	
+	STEP 03
+
+	- START
+	- VERIFICAR OS ERROS
+	- CLOSE
+
+
+04 AGORA FAZER UM BKP-REST DO BANCO METADATA.FDB (CRIA O NOVO BANCO GESTORE.FDB SEM ERROS)
+
+	gbak.exe -b -v -g -user sysdba -pass As#SafeDB! METADATA.FDB GESTORE.FBK
+	gbak.exe -c -v -g -user sysdba -pass As#SafeDB! GESTORE.FBK GESTORE.FDB
+
+
+05 COLOCAR O BANCO GESTORE.FDB NO LOCAL CORRETO

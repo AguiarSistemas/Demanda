@@ -1,0 +1,74 @@
+Hostname padrão dos servidores linux - srvdb
+
+user - suporte 
+Password - As#serv. ou - As#servidor!
+
+_____________________________ Comandos Padrões ________________________________________
+
+*Para ter acesso administrador
+
+sudo
+
+* Indica a localização da pasta q vc está
+
+pwd
+
+* listar arquivos da pasta
+
+ls
+
+* Andar por pastas
+
+cd /
+
+* Limpar Pront
+
+clear
+
+* Ir para pasta Home do servidor
+
+home /
+
+_________________________ Comandos Comuns do Dia a Dia ________________________________
+
+
+* Caminho padrão em novos servidores
+
+home/suporte/bancos 
+
+* Realizar Backup do Banco de Dados
+
+sudo backup.sh 
+
+_________________________________________________________________________________________
+
+* Ajustar data e hora em servidor linux
+
+	Execute o processo: 
+
+sudo data_hora.sh 
+
+	Se não der certo, tente:
+
+timedatectl list-timezones | grep Mana
+sudo timedatectl set-timezone America/Manaus
+sudo shutdown -r now (Isso Reiniará o Servidor)
+
+* Mudar senha firebird no linux
+
+cd "\Program Files\Firebird\Firebird_3_0\"
+C:\Program Files (x86)\Firebird\Firebird_2_5\bin>
+gsec -user SYSDBA -password masterkey 
+modify SYSDBA -pw As#bank. (Está aplicando a senha As#bank.)Comando = chmod 777  * -R
+Ideal - drwxr-xr-x
+
+* Permissão Total a pasta
+
+sudo chmod 777  * -R (Libera todas as permissões)
+
+drwxr-xr-x (Permissões Ideais na pasta)
+
+* Fazer Backup direto na rede
+
+gbak -b -v -g -user SYSDBA -pass As#bank. srvdb:gestore C:\AsUtils\gestore.fbk
+_________________________________________________________________________________________

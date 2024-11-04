@@ -1,0 +1,4 @@
+--- Duplicidade de evento Carta de Correção ----- 
+
+O codigo da tabela TB_Carta_Correcao vem de uma tabela chamada Tb_evento_count 
+na mesma só pode existir o numero do evento já autorizado e apena uma linha, apague as linhas duplicadas.

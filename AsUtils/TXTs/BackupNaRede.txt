@@ -1,0 +1,1 @@
+gbak -b -v -g -user SYSDBA -pass As#bank. srvdb:gestore C:\AsUtils\gestore.fbk

@@ -1,0 +1,50 @@
+* GERADORES DE NUMERO DA NF                               
+
+55 - GEN_IDNF
+65 - GEN_ID_TIPO_NF_65 
+
+* Comando Registrar DLL no Proint de Comando (Normalmente utilizada na Midas)
+
+Regsvr32 C:\Windows\SysWOW64\midas.dll
+
+ .********************************************.
+ |                                            |
+ | Ramais:                                    |
+ |                                            |
+ | RECEPÇÃO 21                                |
+ |                                            |
+ | DANIELA 22                                 |
+ | GAIO 23                                    |
+ |                                            |
+ | LIEL 24                                    |
+ | BETO 25                                    |
+ | CAIRO 26                                   |
+ |                                            |
+ | VALBER CASA 70                             |
+ |                                            |
+ | VALBER 32                                  |
+ | ESTAGIÁRIO 28                              |
+ | GIL 29                                     |
+ | FINANCEIRO 33                              |
+ |                                            |
+ '********************************************' 
+
+  ____________________________________________ 
+ |                                            |
+ | Multibanco                                 |
+ |                                            |
+ | [MULTI_BD]                                 |
+ |                                            |
+ | ID_DB1=1                                   |
+ | ID_DB2=2                                   |
+ | ID_DB3=3                                   |
+ | ID_DB4=4                                   |
+ | ID_DB5=5                                   |
+ | ID_DB6=6                                   |
+ |____________________________________________|
+
+* Ativar Impressão direta (Incluir no Gestore.ini)
+
+[DARUMA_DIRETO]
+DIRETO=S
+_________________________________________________
